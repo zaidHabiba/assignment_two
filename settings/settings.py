@@ -20,7 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#'
+
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+#SECRET_KEY = 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#'
+#export('SECRET_KEY', 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'dd.urls'
+ROOT_URLCONF = 'polls.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'dd.wsgi.application'
+WSGI_APPLICATION = 'wsgi.wsgi.application'
 
 
 # Database
