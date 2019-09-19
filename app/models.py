@@ -7,9 +7,9 @@ class Genre(models.Model):
     genre = models.CharField(max_length=64)
 
 class Book(models.Model):
-    name = models.CharField(max_length=64)
-    author = models.CharField(max_length=64)
-    summary = models.CharField(max_length=255)
+    name = models.TextField(max_length=64)
+    author = models.TextField(max_length=64)
+    summary = models.TextField(max_length=255)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
