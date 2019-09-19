@@ -8,8 +8,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-#SECRET_KEY = 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#'
+#SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # export('SECRET_KEY', 'cy-0pyhou*e!#r8w19xu51m4)b*f!^q=dw#1jql%9c%0=_yn*#')
 
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls',
 ]
 
 MIDDLEWARE = [
