@@ -33,8 +33,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=64)),
                 ('author', models.CharField(max_length=64)),
                 ('summary', models.CharField(max_length=255)),
-                ('genre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.Genre')),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.Language')),
+                ('genre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.Genre')),
+                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.Language')),
             ],
         ),
     ]
