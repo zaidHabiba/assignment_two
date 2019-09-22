@@ -71,7 +71,7 @@ class BookInstance(models.Model):
     due_book_date = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=1, choices=status_choices)
     book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, related_name="instance")
-    person = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="persons_have_book")
+    person = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="persons_assign_to_book")
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True, blank=True)
 
