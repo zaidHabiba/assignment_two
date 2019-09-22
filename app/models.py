@@ -4,10 +4,16 @@ from django.db import models
 from django.urls import reverse
 
 
-class Language(models.Model):
+class CommonInfo(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Language(CommonInfo):
     language = models.CharField(max_length=64)
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('language', args=[str(self.id)])
@@ -16,10 +22,8 @@ class Language(models.Model):
         return "Language {}".format(self.id)
 
 
-class Genre(models.Model):
+class Genre(CommonInfo):
     genre = models.CharField(max_length=64)
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('genre', args=[str(self.id)])
@@ -28,13 +32,11 @@ class Genre(models.Model):
         return "Genre {}".format(self.id)
 
 
-class Book(models.Model):
-    name = models.TextField()
-    summary = models.TextField(blank=True)
+class Book(CommonInfo):
+    name = models.CharField(max_length=64)
+    summary = models.CharField(max_length=255)
     genre = models.ManyToManyField(Genre, related_name="books")
     language = models.ManyToManyField(Language, related_name="books")
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('book', args=[str(self.id)])
@@ -43,15 +45,13 @@ class Book(models.Model):
         return "Book {}".format(self.id)
 
 
-class Author(models.Model):
-    name = models.TextField(max_length=64)
-    birth_date = models.DateField()
-    death_date = models.DateField(blank=True, null=True)
-    nationality = models.TextField()
-    birth_place = models.TextField(blank=True, null=True)
+class Author(CommonInfo):
+    name = models.CharField(max_length=64)
+    birth_date = models.DateField(blank=True)
+    death_date = models.DateField(blank=True)
+    nationality = models.CharField(max_length=64,blank=True)
+    birth_place = models.CharField(max_length=64, blank=True)
     books = models.ManyToManyField(Book, related_name="authors")
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('author', args=[str(self.id)])
@@ -60,7 +60,7 @@ class Author(models.Model):
         return "Author {}".format(self.id)
 
 
-class BookInstance(models.Model):
+class BookInstance(CommonInfo):
     status_choices = (
         ('M', 'Maintenance')
         , ('L', 'On Loan')
@@ -68,12 +68,10 @@ class BookInstance(models.Model):
         , ('R', 'Reserved')
     )
 
-    due_book_date = models.DateField(auto_now_add=True)
+    due_book_date = models.DateField()
     status = models.CharField(max_length=1, choices=status_choices)
-    book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, related_name="instance")
-    person = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="persons_assign_to_book")
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, related_name="instance", null=True)
+    person = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="persons_assign_to_book", null=True)
 
     def get_absolute_url(self):
         return reverse('book_instance.details', args=[str(self.id)])
