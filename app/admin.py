@@ -9,11 +9,11 @@ class BookInstanceInline(admin.TabularInline):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'book_author', 'summary', 'genre_list',)
-    list_filter = ('id', 'name', 'book_author', 'summary',)
+    list_display = ('id', 'name', 'summary', 'genre_list',)
+    list_filter = ('id', 'name', 'summary',)
     fieldsets = (
         (None, {
-            'fields': ('name', 'book_author', 'summary',)
+            'fields': ('name', 'summary',)
         }),
         ('Languages and Genre options', {
             'classes': ('collapse',),

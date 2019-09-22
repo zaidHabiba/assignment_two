@@ -6,6 +6,8 @@ from django.urls import reverse
 
 class Language(models.Model):
     language = models.CharField(max_length=64)
+    create = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('language', args=[str(self.id)])
@@ -16,6 +18,8 @@ class Language(models.Model):
 
 class Genre(models.Model):
     genre = models.CharField(max_length=64)
+    create = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('genre', args=[str(self.id)])
@@ -26,10 +30,11 @@ class Genre(models.Model):
 
 class Book(models.Model):
     name = models.TextField()
-    book_author = models.TextField()
-    summary = models.TextField()
-    genre = models.ManyToManyField(Genre)
-    language = models.ManyToManyField(Language)
+    summary = models.TextField(blank=True)
+    genre = models.ManyToManyField(Genre, related_name="books")
+    language = models.ManyToManyField(Language, related_name="books")
+    create = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('book', args=[str(self.id)])
@@ -44,7 +49,9 @@ class Author(models.Model):
     death_date = models.DateField(blank=True, null=True)
     nationality = models.TextField()
     birth_place = models.TextField(blank=True, null=True)
-    books = models.ManyToManyField(Book)
+    books = models.ManyToManyField(Book, related_name="authors")
+    create = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('author', args=[str(self.id)])
@@ -63,8 +70,10 @@ class BookInstance(models.Model):
 
     due_book_date = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=1, choices=status_choices)
-    book = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
-    person = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    book = models.ForeignKey(Book, on_delete=models.DO_NOTHING, related_name="instance")
+    person = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="persons_have_book")
+    create = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('book_instance.details', args=[str(self.id)])
