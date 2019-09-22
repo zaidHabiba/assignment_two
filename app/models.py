@@ -8,7 +8,7 @@ class Language(models.Model):
     language = models.CharField(max_length=64)
 
     def get_absolute_url(self):
-        return reverse('language.details', args=[str(self.id)])
+        return reverse('language', args=[str(self.id)])
 
     def __str__(self):
         return "Language {}".format(self.id)
@@ -18,10 +18,24 @@ class Genre(models.Model):
     genre = models.CharField(max_length=64)
 
     def get_absolute_url(self):
-        return reverse('genre.details', args=[str(self.id)])
+        return reverse('genre', args=[str(self.id)])
 
     def __str__(self):
         return "Genre {}".format(self.id)
+
+
+class Book(models.Model):
+    name = models.TextField()
+    book_author = models.TextField()
+    summary = models.TextField()
+    genre = models.ManyToManyField(Genre)
+    language = models.ManyToManyField(Language)
+
+    def get_absolute_url(self):
+        return reverse('book', args=[str(self.id)])
+
+    def __str__(self):
+        return "Book {}".format(self.id)
 
 
 class Author(models.Model):
@@ -30,26 +44,13 @@ class Author(models.Model):
     death_date = models.DateField(blank=True, null=True)
     nationality = models.TextField()
     birth_place = models.TextField(blank=True, null=True)
+    books = models.ManyToManyField(Book)
 
     def get_absolute_url(self):
-        return reverse('author.details', args=[str(self.id)])
+        return reverse('author', args=[str(self.id)])
 
     def __str__(self):
         return "Author {}".format(self.id)
-
-
-class Book(models.Model):
-    name = models.TextField()
-    authors = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
-    summary = models.TextField()
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-        return reverse('book.details', args=[str(self.id)])
-
-    def __str__(self):
-        return "Book {}".format(self.id)
 
 
 class BookInstance(models.Model):
