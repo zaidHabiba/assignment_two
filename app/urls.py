@@ -1,21 +1,14 @@
-"""dd URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 
+from .views.book import BooksPageView, BookPageView
+from .views.home import HomePageView
+from .views.author import AuthorPageView,AuthorsPageView
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('catalog/', HomePageView.as_view(), name="home"),
+    path('catalog/books/', BooksPageView.as_view(), name="books"),
+    path('catalog/book/<int:pk>/', BookPageView.as_view(), name='book'),
+    path('catalog/authors/', AuthorsPageView.as_view(), name="authors"),
+    path('catalog/author/<int:pk>/', AuthorPageView.as_view(), name='author'),
 ]

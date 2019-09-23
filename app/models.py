@@ -39,7 +39,7 @@ class Book(CommonInfo):
     language = models.ManyToManyField(Language, related_name="books")
 
     def get_absolute_url(self):
-        return reverse('book', args=[str(self.id)])
+        return reverse('book/', kwargs={'id': self.pk})
 
     def __str__(self):
         return "Book {}".format(self.id)
@@ -49,7 +49,7 @@ class Author(CommonInfo):
     name = models.CharField(max_length=64)
     birth_date = models.DateField(blank=True)
     death_date = models.DateField(blank=True)
-    nationality = models.CharField(max_length=64,blank=True)
+    nationality = models.CharField(max_length=64, blank=True)
     birth_place = models.CharField(max_length=64, blank=True)
     books = models.ManyToManyField(Book, related_name="authors")
 

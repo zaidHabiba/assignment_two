@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Books</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Summary</th>
+        <th>Instance</th>
+        <th>Languages</th>
+        <th>Genre</th>
+    </tr>
+    {% for book in object_list %}
+        <tr>
+            <td>{{ book.name }}</td>
+            <td>{{ book.summary }}</td>
+            <td>{{ book.instance.count }}</td>
+            <td>
+                {% for language in book.language.all %}
+                    {{ language.language }},
+                {% endfor %}
+            </td>
+            <td>
+                {% for genre in book.genre.all %}
+                    {{ genre.genre }},
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
