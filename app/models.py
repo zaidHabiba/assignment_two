@@ -62,16 +62,19 @@ class Author(CommonInfo):
 
 class BookInstance(CommonInfo):
     status_choices = (
-        ('M', 'Maintenance')
-        , ('L', 'On Loan')
-        , ('A', 'Available')
-        , ('R', 'Reserved')
+        ('M', 'Maintenance'),
+        ('L', 'On Loan'),
+        ('A', 'Available'),
+        ('R', 'Reserved'),
     )
 
     due_book_date = models.DateField()
     status = models.CharField(max_length=1, choices=status_choices)
-    book = models.ForeignKey(Book, on_delete=models.SET_NULL, related_name="instance", null=True)
-    person = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="persons_assign_to_book", null=True)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL,
+                             related_name="instance", null=True)
+    person = models.ForeignKey(User, on_delete=models.SET_NULL,
+                               related_name="persons_assign_to_book",
+                               null=True)
 
     def get_absolute_url(self):
         return reverse('book_instance.details', args=[str(self.id)])

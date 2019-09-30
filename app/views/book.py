@@ -1,16 +1,12 @@
 from django import forms
-from django.utils import timezone
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView
-from django.views.generic.list import ListView
-
-from app.models import Book
-from django import forms
 from django.http.response import HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+
+from app.models import Book
+
 
 class BookForm(forms.ModelForm):
     class Meta:
@@ -31,6 +27,7 @@ class CreateBookView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         return HttpResponseRedirect(self.get_success_url())
+
 
 class BooksPageView(ListView):
     template_name = "app/books.html"

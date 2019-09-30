@@ -5,10 +5,14 @@ dj-database-url==0.5.0
 Django==2.2.5
 django-bootstrap4==1.0.1
 django-heroku==0.3.1
+entrypoints==0.3
+flake8==3.7.8
 gunicorn==19.9.0
-heroku==0.1.4
 idna==2.8
+mccabe==0.6.1
 psycopg2==2.8.3
+pycodestyle==2.5.0
+pyflakes==2.1.1
 python-dateutil==1.5
 pytz==2019.2
 requests==2.22.0

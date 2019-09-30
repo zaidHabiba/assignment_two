@@ -1,9 +1,6 @@
 from django import forms
 from django.http.response import HttpResponseRedirect
-from django.utils import timezone
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
 
 from app.models import Language
 
