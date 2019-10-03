@@ -53,5 +53,6 @@ jobs:
           name: Deply on Heroku
           command: |
             wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+            heroku maintenance:on -a djangotestapp2019
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
+            heroku maintenance:off -a djangotestapp2019
