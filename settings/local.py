@@ -34,7 +34,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -50,14 +52,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wsgi.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+DATABASES = {}
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DB_URL = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

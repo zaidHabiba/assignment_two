@@ -5,12 +5,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
-from app.models import Language
+from app.models import BookInstance
 
 
-class LanguageForm(forms.ModelForm):
+class BookInstanceForm(forms.ModelForm):
     class Meta:
-        model = Language
+        model = BookInstance
         fields = ("__all__")
 
     def save(self, commit=True):
@@ -18,20 +18,20 @@ class LanguageForm(forms.ModelForm):
         return self.instance
 
 
-class CreateLanguageView(CreateView):
-    model = Language
-    form_class = LanguageForm
+class CreateBookInstanceView(CreateView):
+    model = BookInstance
+    form_class = BookInstanceForm
     template_name = 'app/create.html'
-    success_url = '/catalog/languages/'
+    success_url = '/catalog/book-instances/'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         return HttpResponseRedirect(self.get_success_url())
 
 
-class LanguagesPageView(ListView):
-    template_name = "app/languages.html"
-    model = Language
+class BookInstancesPageView(ListView):
+    template_name = "app/book-instances.html"
+    model = BookInstance
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,9 +39,9 @@ class LanguagesPageView(ListView):
         return context
 
 
-class LanguagePageView(DetailView):
-    template_name = "app/language.html"
-    model = Language
+class BookInstancePageView(DetailView):
+    template_name = "app/book-instance.html"
+    model = BookInstance
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
