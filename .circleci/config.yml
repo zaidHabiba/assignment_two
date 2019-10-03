@@ -51,6 +51,11 @@ jobs:
 
       - run:
           name: Deply on Heroku
+
+          filters:
+            branches:
+              only: master
+
           command: |
             wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
             heroku maintenance:on -a djangotestapp2019
