@@ -53,7 +53,7 @@ jobs:
           name: Deply on Heroku
           command: |
             . venv/bin/activate
-            sudo snap install --classic heroku
+            yay -S heroku-cli
             heroku maintenance:on
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
             heroku maintenance:off
