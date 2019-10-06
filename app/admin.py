@@ -45,8 +45,10 @@ class BookInstanceAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'birth_date', 'death_date', 'nationality', 'birth_place',)
-    list_filter = ('name', 'birth_date', 'death_date', 'nationality', 'birth_place',)
+    list_display = ('id', 'name', 'birth_date', 'death_date',
+                    'nationality', 'birth_place',)
+    list_filter = ('name', 'birth_date', 'death_date',
+                   'nationality', 'birth_place',)
 
 
 @admin.register(Genre)

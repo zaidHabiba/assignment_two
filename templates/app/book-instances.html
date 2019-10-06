@@ -1,0 +1,23 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Genres</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>due_book_date</th>
+            <th>status</th>
+            <th>book</th>
+            <th>person</th>
+        </tr>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.due_book_date }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.book }}</td>
+                <td>{{ item.person }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}

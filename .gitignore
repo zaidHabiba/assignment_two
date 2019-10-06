@@ -108,3 +108,7 @@ venv.bak/
 
 #env variables
 ./env
+
+#remove local settings
+
+!/settings/local.py

@@ -39,7 +39,7 @@ class Book(CommonInfo):
     language = models.ManyToManyField(Language, related_name="books")
 
     def get_absolute_url(self):
-        return reverse('book', args=[str(self.id)])
+        return reverse('book/', kwargs={'id': self.pk})
 
     def __str__(self):
         return "Book {}".format(self.id)
@@ -49,7 +49,7 @@ class Author(CommonInfo):
     name = models.CharField(max_length=64)
     birth_date = models.DateField(blank=True)
     death_date = models.DateField(blank=True)
-    nationality = models.CharField(max_length=64,blank=True)
+    nationality = models.CharField(max_length=64, blank=True)
     birth_place = models.CharField(max_length=64, blank=True)
     books = models.ManyToManyField(Book, related_name="authors")
 
@@ -62,16 +62,19 @@ class Author(CommonInfo):
 
 class BookInstance(CommonInfo):
     status_choices = (
-        ('M', 'Maintenance')
-        , ('L', 'On Loan')
-        , ('A', 'Available')
-        , ('R', 'Reserved')
+        ('M', 'Maintenance'),
+        ('L', 'On Loan'),
+        ('A', 'Available'),
+        ('R', 'Reserved'),
     )
 
     due_book_date = models.DateField()
     status = models.CharField(max_length=1, choices=status_choices)
-    book = models.ForeignKey(Book, on_delete=models.SET_NULL, related_name="instance", null=True)
-    person = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="persons_assign_to_book", null=True)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL,
+                             related_name="instance", null=True)
+    person = models.ForeignKey(User, on_delete=models.SET_NULL,
+                               related_name="persons_assign_to_book",
+                               null=True)
 
     def get_absolute_url(self):
         return reverse('book_instance.details', args=[str(self.id)])

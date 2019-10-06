@@ -1,0 +1,21 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Book Instance</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>due_book_date</th>
+            <th>status</th>
+            <th>book</th>
+            <th>person</th>
+        </tr>
+        <tr>
+            <td>{{ object.id }}</td>
+            <td>{{ object.due_book_date }}</td>
+            <td>{{ object.status }}</td>
+            <td>{{ object.book }}</td>
+            <td>{{ object.person }}</td>
+        </tr>
+    </table>
+
+{% endblock %}

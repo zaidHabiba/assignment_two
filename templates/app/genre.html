@@ -1,0 +1,14 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Genre</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Genre</th>
+        </tr>
+        <tr>
+            <td>{{ object.id }}</td>
+            <td>{{ object.genre }}</td>
+        </tr>
+    </table>
+{% endblock %}
