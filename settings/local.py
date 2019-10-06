@@ -1,5 +1,7 @@
 import os
 
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -53,7 +55,6 @@ WSGI_APPLICATION = 'wsgi.wsgi.application'
 
 # Database
 DATABASES = {}
-import dj_database_url
 
 DB_URL = os.environ.get('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)

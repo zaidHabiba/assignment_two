@@ -1,5 +1,6 @@
 import os
 
+import dj_database_url
 import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,8 +58,6 @@ WSGI_APPLICATION = 'wsgi.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {}
-
-import dj_database_url
 
 DB_URL = os.environ.get('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(DB_URL, conn_max_age=600)
