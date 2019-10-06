@@ -31,6 +31,7 @@ class CreateAuthorView(FormView):
         form.save()
         return super().form_valid(form)
 
+
 class AuthorsPageView(ListView):
     template_name = "app/authors.html"
     model = Author
@@ -59,6 +60,7 @@ class CreateBookView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
 
 class BooksPageView(ListView):
     template_name = "app/books.html"
@@ -89,6 +91,7 @@ class CreateBookInstanceView(FormView):
         form.save()
         return super().form_valid(form)
 
+
 class BookInstancesPageView(ListView):
     template_name = "app/book-instances.html"
     model = BookInstance
@@ -118,6 +121,7 @@ class CreateGenreView(FormView):
         form.save()
         return super().form_valid(form)
 
+
 class GenresPageView(ListView):
     template_name = "app/genres.html"
     model = Genre
@@ -146,6 +150,7 @@ class CreateLanguageView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
 
 class LanguagesPageView(ListView):
     template_name = "app/languages.html"
