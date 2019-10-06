@@ -1,53 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
-</head>
-<body>
-
-<h2>Books</h2>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Birth Date</th>
-        <th>Death Date</th>
-        <th>Nationality</th>
-        <th>Birth Place</th>
-        <th>Books</th>
-    </tr>
-    {% for author in object_list %}
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Books</h2>
+    <table>
         <tr>
-            <td>{{ author.name }}</td>
-            <td>{{ author.birth_date }}</td>
-            <td>{{ author.death_date }}</td>
-            <td>{{ author.nationality }}</td>
-            <td>{{ author.birth_place }}</td>
-            <td>
-                {% for books in author.books.all %}
-                    {{ books.name }},
-                {% endfor %}
-            </td>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Death Date</th>
+            <th>Nationality</th>
+            <th>Birth Place</th>
+            <th>Books</th>
         </tr>
-    {% endfor %}
+        {% for author in object_list %}
+            <tr>
+                <td>{{ author.name }}</td>
+                <td>{{ author.birth_date }}</td>
+                <td>{{ author.death_date }}</td>
+                <td>{{ author.nationality }}</td>
+                <td>{{ author.birth_place }}</td>
+                <td>
+                    {% for books in author.books.all %}
+                        {{ books.name }},
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
 
-</table>
+    </table>
 
-</body>
-</html>
+{% endblock %}
