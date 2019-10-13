@@ -1,12 +1,15 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 
 from .views import (CreateBookInstanceView, BookInstancePageView,
                     BookInstancesPageView, AuthorPageView, AuthorsPageView,
                     CreateAuthorView, BooksPageView, BookPageView,
                     CreateBookView, GenrePageView, GenresPageView,
                     CreateGenreView, HomePageView, LanguagePageView,
-                    LanguagesPageView, CreateLanguageView)
+                    LanguagesPageView, CreateLanguageView,LoginPageView,
+                    LogoutView, Signup,PasswordChangeView
+                    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,5 +40,9 @@ urlpatterns = [
          BookInstancePageView.as_view(), name='book_instance'),
     path('catalog/book-instance/add/',
          CreateBookInstanceView.as_view(), name='add_book_instance'),
+     path('catalog/login/', LoginPageView.as_view(), name='login'),
+    path('catalog/logout/', LogoutView.as_view(), name='logout'),
+    path('catalog/signup/', Signup.as_view(), name='signup'),
+    path('catalog/change_password/', PasswordChangeView.as_view(), name='change_password'),
 
 ]

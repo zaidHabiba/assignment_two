@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 
 from .models import Book, Genre, Language, BookInstance, Author
+
+admin.site.register(Permission)
 
 
 class BookInstanceInline(admin.TabularInline):
