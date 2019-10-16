@@ -214,17 +214,17 @@ class LanguagePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
 
 
 class LoginPageView(LoginView):
-    template_name = 'admin/login.html'
+    template_name = 'app/login.html'
     success_url = '/catalog'
     login_url = LOGIN_URL
 
-    def post(self, request, *args, **kwargs):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+    def form_valid(self, form):
+        username = form.data["username"]
+        password = form.data["password"]
+        user = authenticate(self.request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect(self.get_redirect_url())
+            login(self.request, user)
+            return super().form_valid(form)
         else:
             return redirect("/catalog/login/")
 
