@@ -3,36 +3,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <title>Assignment Two</title>
-        <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
 </head>
 <body>
-    <div class="page-header">
-        <h1><a href={% url "home" %}>Home</a></h1>
+<div class="ui inverted top fixed menu">
+    <a class="active item" href="{% url 'home' %}">
+        Home
+    </a>
+    {% if user.is_authenticated %}
+        <a class="ui item" href="{% url 'books' %}">
+            Books
+        </a>
+        <a class="ui item" href="{% url 'authors' %}">
+            Authors
+        </a>
+        <a class="ui item" href="{% url 'book_instances' %}">
+            Borrowed books
+        </a>
+    {% endif %}
+    <div class="right menu">
+        {% if user.is_authenticated %}
+            <a class="ui item" href="{% url 'logout' %}">
+                Logout
+            </a>
+        {% else %}
+            <a class="ui item" href="{% url 'signup' %}">
+                <div class="ui inverted button">Sign Up</div>
+            </a>
+            <a class="ui item" href="{% url 'login' %}">
+                Login
+            </a>
+        {% endif %}
     </div>
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-            {% block content %}
-            {% endblock %}
-            </div>
-        </div>
-    </div>
+</div>
+<br/><br/><br/><br/><br/><br/>
+<div class="ui container">
+    {% block content %}
+    {% endblock %}
+</div>
+<br/><br/><br/><br/><br/><br/>
 </body>
 </html>

@@ -1,23 +1,26 @@
 {% extends "app/base.html" %}
 {% block content %}
-    <h2>Genres</h2>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>due_book_date</th>
-            <th>status</th>
-            <th>book</th>
-            <th>person</th>
-        </tr>
+    <div class="ui divided  items">
         {% for item in object_list %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.due_book_date }}</td>
-                <td>{{ item.status }}</td>
-                <td>{{ item.book }}</td>
-                <td>{{ item.person }}</td>
-            </tr>
+            <div class="item">
+                <div class="content">
+                    <div class="header">Id: {{ item.id }}</div>
+                    <div class="meta">
+                        <span class="price">Date: {{ item.due_book_date }}</span>
+                    </div>
+                    <div class="description">
+                        Status:
+                        <p>{{ item.status }}</p>
+                    </div>
+                    <span>Book:
+                        {{ item.book }}
+                    </span>
+                    <br/>
+                    <span>Person:
+                        {{ item.person }}
+                    </span>
+                </div>
+            </div>
         {% endfor %}
 
-    </table>
 {% endblock %}
