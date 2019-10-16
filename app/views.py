@@ -1,9 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import Group
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeForm
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeView,
+                                       PasswordChangeForm)
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic.base import TemplateView
@@ -90,7 +92,7 @@ class BooksPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         search_value = self.request.GET.get("search", "")
-        if search_value is not "":
+        if search_value:
             books = Book.objects.filter(name__contains=search_value)
             return {"object_list": books}
         context = super().get_context_data(**kwargs)

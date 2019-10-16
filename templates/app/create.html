@@ -1,16 +1,17 @@
 {% extends "app/base.html" %}
-
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 {% block content %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
+
     <form method="post" class="form">
         {% csrf_token %}
         {% bootstrap_form form layout='inline' %}
         {% buttons %}
-    <button type="submit" class="btn btn-primary">
-      Create
-    </button>
-  {% endbuttons %}
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        {% endbuttons %}
     </form>
+
 {% endblock %}
