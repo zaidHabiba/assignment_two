@@ -1,3 +1,9 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeForm
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -9,11 +15,15 @@ from app.forms import (AuthorForm, BookInstanceForm,
 from app.models import (Author, BookInstance,
                         Genre, Language, Book)
 
+LOGIN_URL = "/catalog/login/"
 
-class HomePageView(TemplateView):
+
+class HomePageView(LoginRequiredMixin, TemplateView):
     template_name = "app/index.html"
+    login_url = LOGIN_URL
 
     def get_context_data(self, **kwargs):
+        print(self.request)
         context = super().get_context_data(**kwargs)
         context['books'] = Book.objects.all()
         context['instance'] = BookInstance.objects.all()
@@ -22,19 +32,24 @@ class HomePageView(TemplateView):
         return context
 
 
-class CreateAuthorView(FormView):
+class CreateAuthorView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = AuthorForm
     template_name = 'app/create.html'
     success_url = '/catalog/authors/'
+    login_url = LOGIN_URL
+    permission_required = 'app.add_author'
 
     def form_valid(self, form):
+        form_valid = super().form_valid(form)
         form.save()
-        return super().form_valid(form)
+        return form_valid
 
 
-class AuthorsPageView(ListView):
+class AuthorsPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "app/authors.html"
     model = Author
+    login_url = LOGIN_URL
+    permission_required = 'app.view_author'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,9 +57,11 @@ class AuthorsPageView(ListView):
         return context
 
 
-class AuthorPageView(DetailView):
+class AuthorPageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "app/author.html"
     model = Author
+    login_url = LOGIN_URL
+    permission_required = 'app.view_author'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,19 +69,23 @@ class AuthorPageView(DetailView):
         return context
 
 
-class CreateBookView(FormView):
+class CreateBookView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = BookForm
     template_name = 'app/create.html'
     success_url = '/catalog/books/'
+    login_url = LOGIN_URL
+    permission_required = 'app.add_book'
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
 
-class BooksPageView(ListView):
+class BooksPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "app/books.html"
     model = Book
+    login_url = LOGIN_URL
+    permission_required = 'app.view_book'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,9 +93,11 @@ class BooksPageView(ListView):
         return context
 
 
-class BookPageView(DetailView):
+class BookPageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "app/book.html"
     model = Book
+    login_url = LOGIN_URL
+    permission_required = 'app.view_book'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -82,19 +105,23 @@ class BookPageView(DetailView):
         return context
 
 
-class CreateBookInstanceView(FormView):
+class CreateBookInstanceView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = BookInstanceForm
     template_name = 'app/create.html'
     success_url = '/catalog/book-instances/'
+    login_url = LOGIN_URL
+    permission_required = 'app.add_bookinstance'
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
 
-class BookInstancesPageView(ListView):
+class BookInstancesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "app/book-instances.html"
     model = BookInstance
+    login_url = LOGIN_URL
+    permission_required = 'app.view_bookinstance'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,9 +129,11 @@ class BookInstancesPageView(ListView):
         return context
 
 
-class BookInstancePageView(DetailView):
+class BookInstancePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "app/book-instance.html"
     model = BookInstance
+    login_url = LOGIN_URL
+    permission_required = 'app.view_bookinstance'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,19 +141,23 @@ class BookInstancePageView(DetailView):
         return context
 
 
-class CreateGenreView(FormView):
+class CreateGenreView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = GenreForm
     template_name = 'app/create.html'
     success_url = '/catalog/genres/'
+    login_url = LOGIN_URL
+    permission_required = 'app.add_genre'
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
 
-class GenresPageView(ListView):
+class GenresPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "app/genres.html"
     model = Genre
+    login_url = LOGIN_URL
+    permission_required = 'app.view_genre'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -132,9 +165,11 @@ class GenresPageView(ListView):
         return context
 
 
-class GenrePageView(DetailView):
+class GenrePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "app/genre.html"
     model = Genre
+    login_url = LOGIN_URL
+    permission_required = 'app.view_genre'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -142,19 +177,23 @@ class GenrePageView(DetailView):
         return context
 
 
-class CreateLanguageView(FormView):
+class CreateLanguageView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = LanguageForm
     template_name = 'app/create.html'
     success_url = '/catalog/languages/'
+    login_url = LOGIN_URL
+    permission_required = 'app.add_language'
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
 
-class LanguagesPageView(ListView):
+class LanguagesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "app/languages.html"
     model = Language
+    login_url = LOGIN_URL
+    permission_required = 'app.view_language'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -162,11 +201,63 @@ class LanguagesPageView(ListView):
         return context
 
 
-class LanguagePageView(DetailView):
+class LanguagePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "app/language.html"
     model = Language
+    login_url = LOGIN_URL
+    permission_required = 'app.view_language'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+
+class LoginPageView(LoginView):
+    template_name = 'app/login.html'
+    success_url = '/catalog'
+    login_url = LOGIN_URL
+
+    def form_valid(self, form):
+        username = form.data["username"]
+        password = form.data["password"]
+        user = authenticate(self.request, username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            return redirect("/catalog/login/")
+
+    def get_redirect_url(self):
+        return "/catalog"
+
+
+class LogoutPageView(LogoutView):
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect("/catalog/login/")
+
+    def get_redirect_url(self):
+        return "/catalog/login/"
+
+
+class ChangePassword(PasswordChangeView):
+    template_name = 'admin/change_form.html'
+    success_url = '/catalog'
+    form_class = PasswordChangeForm
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class Signup(FormView):
+    template_name = 'app/create.html'
+    success_url = '/catalog'
+    form_class = UserCreationForm
+
+    def form_valid(self, form):
+        form_valid = super().form_valid(form)
+        form.save()
+        return form_valid
