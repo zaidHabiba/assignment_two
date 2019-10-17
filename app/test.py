@@ -17,12 +17,16 @@ class TestLogin(TestCase):
     def test_login(self):
         client = Client()
         response = client.post('/catalog/login/', {'username': 'zaid', 'password': 'zaid'})
-        self.assertEqual(response.status_code, 302)  # Ridrect
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/catalog")
+        print(response)
 
     def test_redirect_not_login(self):
         client = Client()
         response = client.get('/catalog/books/')
         self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/catalog/login/?next=/catalog/books/")
+        print(response)
 
     def test_forbidden(self):
         client = Client()
@@ -78,6 +82,7 @@ class TestLogin(TestCase):
         client.post('/catalog/login/', {'username': 'zaid', 'password': 'zaid'})
         response = client.post('/catalog/language/add/', {"language": "english"})
         self.assertEqual(response.status_code, 302)  # Redirect to catalog/languages/
+        self.assertRedirects(response, "/catalog/languages/")
         response = client.get('/catalog/languages/')
         self.assertEqual(response.status_code, 200)
 
@@ -93,6 +98,7 @@ class TestLogin(TestCase):
         client.post('/catalog/login/', {'username': 'zaid', 'password': 'zaid'})
         response = client.post('/catalog/genre/add/', {"genre": "x113a"})
         self.assertEqual(response.status_code, 302)  # Redirect to catalog/genres/
+        self.assertRedirects(response, '/catalog/genres/')
         response = client.get('/catalog/genres/')
         self.assertEqual(response.status_code, 200)
 
