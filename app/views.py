@@ -1,8 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeForm
+from django.contrib.auth.models import Group
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeView,
+                                       PasswordChangeForm)
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic.base import TemplateView
@@ -88,6 +91,10 @@ class BooksPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     permission_required = 'app.view_book'
 
     def get_context_data(self, **kwargs):
+        search_value = self.request.GET.get("search", "")
+        if search_value:
+            books = Book.objects.filter(name__contains=search_value)
+            return {"object_list": books}
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
@@ -124,8 +131,10 @@ class BookInstancesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListVie
     permission_required = 'app.view_bookinstance'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
+        if self.request.user.is_superuser:
+            context = {"object_list": BookInstance.objects.all()}
+        else:
+            context = {"object_list": BookInstance.objects.filter(person=self.request.user)}
         return context
 
 
@@ -253,11 +262,13 @@ class ChangePassword(PasswordChangeView):
 
 
 class Signup(FormView):
-    template_name = 'app/create.html'
+    template_name = 'app/signup.html'
     success_url = '/catalog'
     form_class = UserCreationForm
 
     def form_valid(self, form):
         form_valid = super().form_valid(form)
-        form.save()
+        user = form.save()
+        group = Group.objects.get(name='User')
+        print(user.groups.add(group))
         return form_valid
