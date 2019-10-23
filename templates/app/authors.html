@@ -1,0 +1,30 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Books</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Death Date</th>
+            <th>Nationality</th>
+            <th>Birth Place</th>
+            <th>Books</th>
+        </tr>
+        {% for author in object_list %}
+            <tr>
+                <td>{{ author.name }}</td>
+                <td>{{ author.birth_date }}</td>
+                <td>{{ author.death_date }}</td>
+                <td>{{ author.nationality }}</td>
+                <td>{{ author.birth_place }}</td>
+                <td>
+                    {% for books in author.books.all %}
+                        {{ books.name }},
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}

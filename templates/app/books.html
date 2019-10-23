@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h1 class="ui header">
+        <div class="content">
+            <i class="book icon"></i>
+            Books
+        </div>
+    </h1><br/>
+    <form method="get" action="{% url 'books' %}">
+        <div class="ui action input" style="width: 100%">
+            <input type="text" placeholder="Search..." name="search">
+            <button class="ui button" type="submit">Search Books</button>
+        </div>
+    </form>
+
+    <br/><br/>
+    <div class="ui divided  items">
+        {% for book in object_list %}
+            <div class="item">
+                <div class="content">
+                    <div class="header">Name: {{ book.name }}</div>
+                    <div class="meta">
+                        <span class="price">Count: {{ book.instance.count }}</span>
+                    </div>
+                    <div class="description">
+                        Description:
+                        <p>{{ book.summary }}</p>
+                    </div>
+                    <span>Languages:
+                        {% for language in book.language.all %}
+                            {{ language.language }},
+                        {% endfor %}
+                    </span>
+                    <br/>
+                    <span>Genre:
+                        {% for genre in book.genre.all %}
+                            {{ genre.genre }},
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

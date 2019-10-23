@@ -1,0 +1,21 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form layout='inline' %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                Login
+            </button>
+        {% endbuttons %}
+    </form>
+    <p><a href="{% url 'login' %}">Lost password?</a></p>
+
+{% endblock %}

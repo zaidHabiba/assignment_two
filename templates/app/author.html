@@ -1,0 +1,26 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Books</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Death Date</th>
+            <th>Nationality</th>
+            <th>Birth Place</th>
+            <th>Books</th>
+        </tr>
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.birth_date }}</td>
+            <td>{{ object.death_date }}</td>
+            <td>{{ object.nationality }}</td>
+            <td>{{ object.birth_place }}</td>
+            <td>
+                {% for books in object.books.all %}
+                    {{ books.name }},
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

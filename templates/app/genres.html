@@ -1,0 +1,17 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Genres</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Genre</th>
+        </tr>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.genre }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Books</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Summary</th>
+            <th>Instance</th>
+            <th>Languages</th>
+            <th>Genre</th>
+        </tr>
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.summary }}</td>
+            <td>{{ object.instance.count }}</td>
+            <td>
+                {% for language in object.language.all %}
+                    {{ language.language }},
+                {% endfor %}
+            </td>
+            <td>
+                {% for genre in object.genre.all %}
+                    {{ genre.genre }},
+                {% endfor %}
+            </td>
+        </tr>
+
+    </table>
+{% endblock %}

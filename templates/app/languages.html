@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h2>Languages</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Languages</th>
+        </tr>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.language }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

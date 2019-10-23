@@ -1,0 +1,26 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <div class="ui divided  items">
+        {% for item in object_list %}
+            <div class="item">
+                <div class="content">
+                    <div class="header">Id: {{ item.id }}</div>
+                    <div class="meta">
+                        <span class="price">Date: {{ item.due_book_date }}</span>
+                    </div>
+                    <div class="description">
+                        Status:
+                        <p>{{ item.status }}</p>
+                    </div>
+                    <span>Book:
+                        {{ item.book }}
+                    </span>
+                    <br/>
+                    <span>Person:
+                        {{ item.person }}
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+
+{% endblock %}
