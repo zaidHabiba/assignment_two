@@ -46,7 +46,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            brew install gdal
+            sudo apt-get install gdal-bin
             python manage.py test
 
 
