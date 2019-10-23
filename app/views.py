@@ -112,7 +112,8 @@ class BookPageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
         return context
 
 
-class CreateBookInstanceView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
+class CreateBookInstanceView(PermissionRequiredMixin,
+                             LoginRequiredMixin, FormView):
     form_class = BookInstanceForm
     template_name = 'app/create.html'
     success_url = '/catalog/book-instances/'
@@ -124,7 +125,8 @@ class CreateBookInstanceView(PermissionRequiredMixin, LoginRequiredMixin, FormVi
         return super().form_valid(form)
 
 
-class BookInstancesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class BookInstancesPageView(PermissionRequiredMixin,
+                            LoginRequiredMixin, ListView):
     template_name = "app/book-instances.html"
     model = BookInstance
     login_url = LOGIN_URL
@@ -134,11 +136,14 @@ class BookInstancesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListVie
         if self.request.user.is_superuser:
             context = {"object_list": BookInstance.objects.all()}
         else:
-            context = {"object_list": BookInstance.objects.filter(person=self.request.user)}
+            context = {
+                "object_list":
+                    BookInstance.objects.filter(person=self.request.user)}
         return context
 
 
-class BookInstancePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class BookInstancePageView(PermissionRequiredMixin,
+                           LoginRequiredMixin, DetailView):
     template_name = "app/book-instance.html"
     model = BookInstance
     login_url = LOGIN_URL
@@ -150,7 +155,8 @@ class BookInstancePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailVi
         return context
 
 
-class CreateGenreView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
+class CreateGenreView(PermissionRequiredMixin,
+                      LoginRequiredMixin, FormView):
     form_class = GenreForm
     template_name = 'app/create.html'
     success_url = '/catalog/genres/'
@@ -186,7 +192,8 @@ class GenrePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
         return context
 
 
-class CreateLanguageView(PermissionRequiredMixin, LoginRequiredMixin, FormView):
+class CreateLanguageView(PermissionRequiredMixin,
+                         LoginRequiredMixin, FormView):
     form_class = LanguageForm
     template_name = 'app/create.html'
     success_url = '/catalog/languages/'
@@ -210,7 +217,8 @@ class LanguagesPageView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
         return context
 
 
-class LanguagePageView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class LanguagePageView(PermissionRequiredMixin,
+                       LoginRequiredMixin, DetailView):
     template_name = "app/language.html"
     model = Language
     login_url = LOGIN_URL
