@@ -13,7 +13,6 @@ jobs:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_test
 
-
     working_directory: ~/repo
 
     steps:
@@ -42,6 +41,7 @@ jobs:
             . venv/bin/activate
             flake8 app
 
+
       - run:
           name: run tests
           command: |
@@ -57,15 +57,12 @@ jobs:
       - run:
           name: Deply on Heroku
 
-          filters:
-            branches:
-              only: master
           command: |
             wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
             heroku maintenance:on -a djangotestapp2019
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
             heroku maintenance:off -a djangotestapp2019
+
           filters:
             branches:
               only: master
-
