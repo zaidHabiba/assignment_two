@@ -1,0 +1,1 @@
+[{"model": "app.author", "pk": 1, "fields": {"created_at": "2019-10-23T20:46:57.061Z", "updated_on": "2019-10-23T20:46:57.061Z", "name": "hjjjj", "birth_date": "2019-09-15", "death_date": "2019-09-23", "nationality": "jjhhj", "birth_place": "hjjhjhjh", "books": [1]}}]
