@@ -3,7 +3,8 @@ from django.test import TestCase
 
 
 class TestLogin(TestCase):
-    fixtures = ['data.json']
+    fixtures = ['user.json', 'author.json', 'book.json',
+                'book_instance.json', 'genre.json', 'language.json']
 
     def setUp(self):
         self.client = Client()

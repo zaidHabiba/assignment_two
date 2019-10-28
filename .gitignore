@@ -109,6 +109,8 @@ venv.bak/
 #env variables
 ./env
 
-#remove local settings
+#statics files
+static/
+staticfiles/
+terraform/
 
-!/settings/local.py
